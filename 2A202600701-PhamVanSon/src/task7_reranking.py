@@ -12,6 +12,15 @@ Nếu dùng MMR hoặc RRF, đảm bảo hiểu và giải thích được cơ c
 from typing import Optional
 
 
+_CROSS_ENCODER_CACHE = {}
+
+def get_cross_encoder():
+    if "model" not in _CROSS_ENCODER_CACHE:
+        from sentence_transformers import CrossEncoder
+        _CROSS_ENCODER_CACHE["model"] = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+    return _CROSS_ENCODER_CACHE["model"]
+
+
 def rerank_cross_encoder(
     query: str, candidates: list[dict], top_k: int = 5
 ) -> list[dict]:
@@ -30,8 +39,7 @@ def rerank_cross_encoder(
         return []
 
     try:
-        from sentence_transformers import CrossEncoder
-        model = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+        model = get_cross_encoder()
         pairs = [[query, c["content"]] for c in candidates]
         scores = model.predict(pairs)
         results = []
@@ -43,9 +51,9 @@ def rerank_cross_encoder(
         return results[:top_k]
     except Exception as e:
         print(f"[WARN] CrossEncoder failed ({e}). Falling back to sentence-transformers cosine similarity.")
-        from sentence_transformers import SentenceTransformer
+        from src.task5_semantic_search import get_embedding_model
         import numpy as np
-        model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+        model = get_embedding_model()
         query_emb = model.encode(query)
         cand_embs = model.encode([c["content"] for c in candidates])
         
@@ -96,12 +104,12 @@ def rerank_mmr(
         return []
 
     # Đảm bảo tất cả candidates đều có embedding
-    from sentence_transformers import SentenceTransformer
     model = None
     for cand in candidates:
         if "embedding" not in cand:
             if model is None:
-                model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+                from src.task5_semantic_search import get_embedding_model
+                model = get_embedding_model()
             cand["embedding"] = model.encode(cand["content"]).tolist()
 
     selected = []
@@ -197,8 +205,8 @@ def rerank(
     if method == "cross_encoder":
         return rerank_cross_encoder(query, candidates, top_k)
     elif method == "mmr":
-        from sentence_transformers import SentenceTransformer
-        model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+        from src.task5_semantic_search import get_embedding_model
+        model = get_embedding_model()
         query_embedding = model.encode(query).tolist()
         return rerank_mmr(query_embedding, candidates, top_k)
     elif method == "rrf":

@@ -10,6 +10,15 @@ Yêu cầu:
 """
 
 
+_MODEL_CACHE = {}
+
+def get_embedding_model():
+    if "model" not in _MODEL_CACHE:
+        from sentence_transformers import SentenceTransformer
+        _MODEL_CACHE["model"] = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+    return _MODEL_CACHE["model"]
+
+
 def semantic_search(query: str, top_k: int = 10) -> list[dict]:
     """
     Tìm kiếm ngữ nghĩa sử dụng vector similarity.
@@ -29,7 +38,6 @@ def semantic_search(query: str, top_k: int = 10) -> list[dict]:
     import json
     import numpy as np
     from pathlib import Path
-    from sentence_transformers import SentenceTransformer
 
     # Đường dẫn vectorstore
     vectorstore_path = Path(__file__).parent.parent / "data" / "vectorstore.json"
@@ -47,7 +55,7 @@ def semantic_search(query: str, top_k: int = 10) -> list[dict]:
         return []
 
     # Encode query sử dụng cùng model ở Task 4
-    model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+    model = get_embedding_model()
     query_embedding = model.encode(query, show_progress_bar=False)
 
     # Tính toán Cosine Similarity
