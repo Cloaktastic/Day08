@@ -1,0 +1,10 @@
+# Khởi tố cựu diễn viên Lệ Hằng về tội mua bán trái phép chất ma túy
+
+**Source:** https://laodong.vn/phap-luat/khoi-to-cuu-dien-vien-le-hang-ve-toi-mua-ban-trai-phap-chat-ma-tuy-1183707.ldo
+**Crawled:** 2026-06-08T14:36:24.819980
+
+---
+
+# Khởi tố cựu diễn viên Lệ Hằng về tội mua bán trái phép chất ma túy
+
+Cơ quan Cảnh sát điều tra Công an quận Đống Đa (Hà Nội) đã khởi tố vụ án, khởi tố bị can đối với Bùi Thị Lệ Hằng (cựu diễn viên Lệ Hằng, nổi tiếng với vai Hoài 'Thatcher' trong phim 'Xin hãy tin em') về tội mua bán trái phép chất ma túy. Lệ Hằng bị bắt quả tang khi đang có hành vi bán trái phép 0,696 gam ma túy tổng hợp. Tại cơ quan công an, cựu diễn viên thừa nhận hành vi mua bán ma túy để kiếm lời.
