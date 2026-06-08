@@ -200,6 +200,7 @@ graph TD
 | Thành viên | MSSV | Nhiệm vụ | Trạng thái |
 |-----------|------|----------|------------|
 | Phạm Văn Sơn | 2A202600701 | Triển khai RAG Backend (Hybrid Search, Reranking, Decontextualization), Xây dựng Streamlit Chat UI, Thiết lập Golden Dataset và RAG Evaluation Pipeline | Hoàn thành |
+Nguyễn Đoàn Gia Tuấn | 2A202600669 | Sữa lỗi, Tìm dữ liệu | Hoàn thành 
 
 ---
 

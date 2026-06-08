@@ -79,7 +79,7 @@ def get_cross_encoder():
     if _CROSS_ENCODER is None:
         try:
             from sentence_transformers import CrossEncoder
-            _CROSS_ENCODER = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+            _CROSS_ENCODER = CrossEncoder("cross-encoder/mmarco-mMiniLMv2-L12-H384-v1")
         except Exception as e:
             print(f"[WARN] Failed to load cross-encoder: {e}", file=sys.stderr)
     return _CROSS_ENCODER
@@ -91,7 +91,13 @@ def get_bm25_index():
     corpus = load_corpus()
     if _BM25 is None and corpus:
         from rank_bm25 import BM25Okapi
-        tokenized_corpus = [doc["content"].lower().split() for doc in corpus]
+        from pyvi import ViTokenizer  # <--- THÊM IMPORT
+        
+        # Sử dụng ViTokenizer để nối từ ghép bằng dấu gạch dưới "_" trước khi split
+        tokenized_corpus = [
+            ViTokenizer.tokenize(doc["content"].lower()).split() 
+            for doc in corpus
+        ]
         _BM25 = BM25Okapi(tokenized_corpus)
     return _BM25, corpus
 
@@ -137,14 +143,17 @@ def lexical_search(query: str, top_k: int = 10) -> list[dict]:
     bm25, corpus = get_bm25_index()
     if not bm25 or not corpus:
         return []
-    tokenized_query = query.lower().split()
+    
+    from pyvi import ViTokenizer  # <--- THÊM IMPORT
+    # Tách từ câu truy vấn của người dùng
+    tokenized_query = ViTokenizer.tokenize(query.lower()).split()
+    
     scores = bm25.get_scores(tokenized_query)
     import numpy as np
     top_indices = np.argsort(scores)[::-1][:top_k]
     
     results = []
     for idx in top_indices:
-        # Avoid picking zero-score docs if too many candidates requested
         if scores[idx] <= 0:
             continue
         results.append({
@@ -252,15 +261,23 @@ def retrieve(query: str, top_k: int = 5, config: str = "hybrid_rerank") -> list[
 # =============================================================================
 
 def reorder_for_llm(chunks: list[dict]) -> list[dict]:
-    """Sort chunks: best first, worst in the middle, second-best last."""
+    """Sắp xếp lại chunks: tốt nhất ở đầu và cuối, kém nhất ở giữa."""
     if len(chunks) <= 2:
         return chunks
-    reordered = []
-    for i in range(0, len(chunks), 2):
-        reordered.append(chunks[i])
-    for i in range(len(chunks) - 1 - (len(chunks) % 2 == 0), 0, -2):
-        reordered.append(chunks[i])
+    
+    reordered = [None] * len(chunks)
+    left = 0
+    right = len(chunks) - 1
+    
+    for i, chunk in enumerate(chunks):
+        if i % 2 == 0:
+            reordered[left] = chunk
+            left += 1
+        else:
+            reordered[right] = chunk
+            right -= 1
     return reordered
+
 
 
 # =============================================================================
