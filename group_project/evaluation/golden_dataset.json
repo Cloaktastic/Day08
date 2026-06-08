@@ -1,7 +1,7 @@
 [
   {
     "question": "Hình phạt cho tội tàng trữ trái phép chất ma tuý theo Điều 249 Bộ luật Hình sự?",
-    "expected_answer": "Phạt tù từ 1 đến 5 năm đối với trường hợp tàng trữ từ 1g đến dưới 5g heroin hoặc cocaine, hoặc chất ma tuý khác với khối lượng tương đương.",
+    "expected_answer": "Phạt tù từ 1 đến 5 năm đối với trường hợp tàng trữ từ 0,1g đến dưới 2g heroin hoặc cocaine, hoặc các chất khác với khối lượng tương đương. Đối với trường hợp nặng hơn có thể phạt tù lên đến 20 năm hoặc chung thân.",
     "expected_context": "Bộ luật Hình sự 2015, Điều 249"
   },
   {
@@ -13,5 +13,70 @@
     "question": "Danh mục các chất ma tuý thuộc nhóm I theo quy định pháp luật Việt Nam gồm những chất nào?",
     "expected_answer": "Nhóm I gồm các chất ma tuý tuyệt đối cấm sử dụng trong y học và đời sống, bao gồm heroin, cocaine, methamphetamine, MDMA (ecstasy), cannabis (cần sa), và các chất tương tự.",
     "expected_context": "Nghị định 57/2022/NĐ-CP, Phụ lục I"
+  },
+  {
+    "question": "Ca sĩ Chi Dân bị bắt và khởi tố về tội danh gì? Ở đâu?",
+    "expected_answer": "Ca sĩ Chi Dân (Nguyễn Trung Hiếu) bị khởi tố về tội tổ chức sử dụng trái phép chất ma túy. Anh bị bắt quả tang khi đang sử dụng ma túy tổng hợp cùng một nhóm bạn tại một căn hộ chung cư trên địa bàn quận Tân Bình, TP.HCM.",
+    "expected_context": "article_01.md"
+  },
+  {
+    "question": "Người mẫu An Tây bị cơ quan chức năng tạm giữ vì hành vi gì và sử dụng chất cấm gì?",
+    "expected_answer": "Người mẫu An Tây (Nguyễn Thị An) bị tạm giữ hình sự về hành vi tàng trữ và tổ chức sử dụng trái phép chất ma túy. Lực lượng chức năng phát hiện cô cùng các đối tượng khác sử dụng bóng cười và ma túy dạng khay (Ketamine) tại một căn hộ chung cư cao cấp.",
+    "expected_context": "article_02.md"
+  },
+  {
+    "question": "Diễn viên hài Hữu Tín bị tuyên phạt mức án bao nhiêu năm tù và về tội danh gì?",
+    "expected_answer": "Trần Hữu Tín (diễn viên hài Hữu Tín) bị Tòa án nhân dân Quận 8 (TP.HCM) tuyên phạt mức án 7 năm 6 tháng tù về tội tổ chức sử dụng trái phép chất ma túy.",
+    "expected_context": "article_03.md"
+  },
+  {
+    "question": "Cựu diễn viên Lệ Hằng (vai Hoài 'Thatcher' trong phim 'Xin hãy tin em') bị khởi tố về tội danh gì? Khối lượng ma túy bị bắt là bao nhiêu?",
+    "expected_answer": "Bùi Thị Lệ Hằng bị khởi tố về tội mua bán trái phép chất ma túy. Cô bị bắt quả tang khi đang bán trái phép 0,696 gam ma túy tổng hợp.",
+    "expected_context": "article_04.md"
+  },
+  {
+    "question": "Các bài báo nói gì về tình trạng nghệ sĩ trẻ vướng vòng lao lý vì ma túy thời gian gần đây?",
+    "expected_answer": "Thời gian gần đây, cơ quan công an liên tiếp triệt phá các ổ nhóm sử dụng ma túy tại các căn hộ chung cư cao tầng có sự tham gia của nhiều nghệ sĩ trẻ, người mẫu, và Tiktoker nổi tiếng. Lạm dụng chất cấm như Ketamine, thuốc lắc phá hỏng sự nghiệp và dẫn đến hình phạt tù nghiêm khắc.",
+    "expected_context": "article_05.md"
+  },
+  {
+    "question": "Thời hạn quản lý người sử dụng trái phép chất ma túy là bao lâu theo Luật Phòng chống ma túy 2021?",
+    "expected_answer": "Thời hạn quản lý người sử dụng trái phép chất ma túy là 01 năm kể từ ngày Chủ tịch Ủy ban nhân dân cấp xã ra quyết định quản lý.",
+    "expected_context": "Luật Phòng chống ma túy 2021, Điều 23"
+  },
+  {
+    "question": "Ai là người có thẩm quyền ra quyết định quản lý người sử dụng trái phép chất ma túy tại địa phương?",
+    "expected_answer": "Chủ tịch Ủy ban nhân dân cấp xã có trách nhiệm ra quyết định và tổ chức quản lý người sử dụng trái phép chất ma túy cư trú tại địa phương trong thời hạn 03 ngày làm việc kể từ khi nhận được kết quả xét nghiệm dương tính.",
+    "expected_context": "Luật Phòng chống ma túy 2021, Điều 23"
+  },
+  {
+    "question": "Quy trình cai nghiện ma túy gồm những giai đoạn nào?",
+    "expected_answer": "Quy trình cai nghiện ma túy gồm 5 giai đoạn: a) Tiếp nhận, phân loại; b) Điều trị cắt cơn, giải độc, điều trị các rối loạn tâm thần, điều trị các bệnh lý khác; c) Giáo dục, tư vấn, phục hồi hành vi, nhân cách; d) Lao động trị liệu, học nghề; đ) Chuẩn bị tái hòa nhập cộng đồng.",
+    "expected_context": "Luật Phòng chống ma túy 2021, Điều 29"
+  },
+  {
+    "question": "Thời hạn cai nghiện ma túy tự nguyện tại gia đình, cộng đồng là bao lâu?",
+    "expected_answer": "Thời hạn cai nghiện ma túy tự nguyện tại gia đình, cộng đồng là từ đủ 06 tháng đến 12 tháng.",
+    "expected_context": "Luật Phòng chống ma túy 2021, Điều 30"
+  },
+  {
+    "question": "Các hành vi nào bị nghiêm cấm trong phòng, chống ma túy theo Luật 2021?",
+    "expected_answer": "Hành vi bị nghiêm cấm bao gồm: trồng cây chứa chất ma túy; nghiên cứu, sản xuất, tàng trữ, vận chuyển, mua bán trái phép chất ma túy; sử dụng, tổ chức sử dụng trái phép chất ma túy; cưỡng bức, lôi kéo người khác sử dụng ma túy; chống đối việc xét nghiệm ma túy; kỳ thị người sử dụng ma túy.",
+    "expected_context": "Luật Phòng chống ma túy 2021, Điều 5"
+  },
+  {
+    "question": "Việc xét nghiệm chất ma túy trong cơ thể được thực hiện đối với những đối tượng nào?",
+    "expected_answer": "Xét nghiệm chất ma túy được thực hiện đối với: người bị phát hiện sử dụng ma túy; người có căn cứ cho rằng sử dụng ma túy; người sử dụng ma túy đang trong thời hạn quản lý; người đang trong thời gian giáo dục tại xã/phường hoặc đang cai nghiện, điều trị nghiện.",
+    "expected_context": "Luật Phòng chống ma túy 2021, Điều 22"
+  },
+  {
+    "question": "Cơ quan chuyên trách phòng, chống tội phạm về ma túy gồm những cơ quan nào?",
+    "expected_answer": "Bao gồm: Cơ quan chuyên trách thuộc Công an nhân dân; Cơ quan chuyên trách thuộc Bộ đội Biên phòng, Cảnh sát biển Việt Nam và Hải quan.",
+    "expected_context": "Luật Phòng chống ma túy 2021, Điều 11"
+  },
+  {
+    "question": "Luật Phòng chống ma túy 2025 (sửa đổi) tập trung vào những nội dung chính nào?",
+    "expected_answer": "Sửa đổi, bổ sung quy định về siết chặt quản lý người sử dụng trái phép chất ma túy; thẩm quyền xét nghiệm ma túy đối với nghi phạm; bổ sung các chất ma túy mới vào danh mục cấm; tăng cường phối hợp liên ngành và quốc tế.",
+    "expected_context": "Luật Phòng chống ma túy 2025, Nội dung chính"
   }
 ]
