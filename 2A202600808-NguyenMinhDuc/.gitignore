@@ -11,6 +11,8 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .coverage
+.coverage.*
+coverage.xml
 htmlcov/
 build/
 dist/
@@ -25,11 +27,14 @@ ENV/
 # Tool/runtime caches
 .deepeval/
 .ipynb_checkpoints/
+**/.ipynb_checkpoints/
 
 # Logs and temporary files
 *.log
 *.tmp
 *.temp
+*.bak
+*.swp
 tmp/
 temp/
 

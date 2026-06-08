@@ -1,0 +1,31 @@
+{
+  "mode": "pageindex_api",
+  "api_base": "https://api.pageindex.ai",
+  "documents": [
+    {
+      "filename": "105.signed_02.pdf",
+      "path": "data/landing/legal/105.signed_02.pdf",
+      "type": "legal_pdf",
+      "doc_id": null,
+      "status": "upload_failed",
+      "error": "403 Client Error: Forbidden for url: https://api.pageindex.ai/doc/"
+    },
+    {
+      "filename": "73_2021_QH14_445185.pdf",
+      "path": "data/landing/legal/73_2021_QH14_445185.pdf",
+      "type": "legal_pdf",
+      "doc_id": null,
+      "status": "upload_failed",
+      "error": "403 Client Error: Forbidden for url: https://api.pageindex.ai/doc/"
+    },
+    {
+      "filename": "Luật-120-2025-QH15.pdf",
+      "path": "data/landing/legal/Luật-120-2025-QH15.pdf",
+      "type": "legal_pdf",
+      "doc_id": null,
+      "status": "upload_failed",
+      "error": "403 Client Error: Forbidden for url: https://api.pageindex.ai/doc/"
+    }
+  ],
+  "updated_at": "2026-06-08T17:49:23"
+}
