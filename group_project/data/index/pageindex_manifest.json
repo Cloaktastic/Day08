@@ -1,0 +1,53 @@
+{
+  "mode": "ready_for_pageindex_api",
+  "documents": [
+    {
+      "filename": "105signed-02.md",
+      "path": "legal/105signed-02.md",
+      "type": "legal",
+      "size": 261
+    },
+    {
+      "filename": "73-2021-qh14-445185.md",
+      "path": "legal/73-2021-qh14-445185.md",
+      "type": "legal",
+      "size": 77087
+    },
+    {
+      "filename": "luat-120-2025-qh15.md",
+      "path": "legal/luat-120-2025-qh15.md",
+      "type": "legal",
+      "size": 289
+    },
+    {
+      "filename": "article-01-ngoai-nguyen-cong-tri-nhung-nghe-si-nao-tung-bi-bat-vi-ma-tuy.md",
+      "path": "news/article-01-ngoai-nguyen-cong-tri-nhung-nghe-si-nao-tung-bi-bat-vi-ma-tuy.md",
+      "type": "news",
+      "size": 7910
+    },
+    {
+      "filename": "article-02-nam-than-lai-nga-nhikolai-inh-bi-bat.md",
+      "path": "news/article-02-nam-than-lai-nga-nhikolai-inh-bi-bat.md",
+      "type": "news",
+      "size": 2688
+    },
+    {
+      "filename": "article-03-nhung-nghe-si-viet-nga-ngua-vi-ma-tuy.md",
+      "path": "news/article-03-nhung-nghe-si-viet-nga-ngua-vi-ma-tuy.md",
+      "type": "news",
+      "size": 7554
+    },
+    {
+      "filename": "article-04-dien-vien-hai-bi-tam-giu-vi-lien-quan-ma-tuy.md",
+      "path": "news/article-04-dien-vien-hai-bi-tam-giu-vi-lien-quan-ma-tuy.md",
+      "type": "news",
+      "size": 920
+    },
+    {
+      "filename": "article-05-toan-canh-vu-bat-tam-giam-long-nhat-va-son-ngoc-minh.md",
+      "path": "news/article-05-toan-canh-vu-bat-tam-giam-long-nhat-va-son-ngoc-minh.md",
+      "type": "news",
+      "size": 4234
+    }
+  ]
+}

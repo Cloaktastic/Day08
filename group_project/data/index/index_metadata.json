@@ -1,0 +1,9 @@
+{
+  "chunk_size": 500,
+  "chunk_overlap": 50,
+  "chunking_method": "recursive",
+  "embedding_model": "local-hashing-v1",
+  "embedding_dim": 384,
+  "vector_store": "local",
+  "num_chunks": 196
+}
