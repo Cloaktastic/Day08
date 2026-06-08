@@ -10,6 +10,36 @@ Yêu cầu:
 """
 
 
+import json
+import sys
+from pathlib import Path
+import faiss
+import numpy as np
+from sentence_transformers import SentenceTransformer
+
+# Reconfigure output streams to handle UTF-8 printing safely on Windows
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
+
+# Paths (compatible with Task 4 output)
+STANDARDIZED_DIR = Path(__file__).parent.parent / "data" / "standardized"
+FAISS_PATH = STANDARDIZED_DIR / "vectorstore.faiss"
+META_PATH = STANDARDIZED_DIR / "vectorstore_meta.json"
+EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+
+# Global model instance to avoid reloading it on every query call
+_model = None
+
+
+def get_embedding_model():
+    global _model
+    if _model is None:
+        _model = SentenceTransformer(EMBEDDING_MODEL)
+    return _model
+
+
 def semantic_search(query: str, top_k: int = 10) -> list[dict]:
     """
     Tìm kiếm ngữ nghĩa sử dụng vector similarity.
@@ -26,37 +56,44 @@ def semantic_search(query: str, top_k: int = 10) -> list[dict]:
         }
         Sorted by score descending.
     """
-    # TODO: Implement semantic search
-    #
-    # Bước 1: Embed query bằng cùng model ở Task 4
-    # Bước 2: Query vector store (cosine similarity)
-    # Bước 3: Return top_k results
-    #
-    # Ví dụ với Weaviate:
-    # import weaviate
-    # from sentence_transformers import SentenceTransformer
-    #
-    # model = SentenceTransformer("BAAI/bge-m3")
-    # query_embedding = model.encode(query).tolist()
-    #
-    # client = weaviate.connect_to_local()
-    # collection = client.collections.get("DrugLawDocs")
-    #
-    # results = collection.query.near_vector(
-    #     near_vector=query_embedding,
-    #     limit=top_k,
-    #     return_metadata=MetadataQuery(distance=True)
-    # )
-    #
-    # return [
-    #     {
-    #         "content": obj.properties["content"],
-    #         "score": 1 - obj.metadata.distance,  # distance → similarity
-    #         "metadata": {"source": obj.properties["source"], ...}
-    #     }
-    #     for obj in results.objects
-    # ]
-    raise NotImplementedError("Implement semantic_search")
+    if not FAISS_PATH.exists() or not META_PATH.exists():
+        print("Vector store files not found. Please run task 4 first.")
+        return []
+
+    # 1. Load embedding model and compute query embedding
+    model = get_embedding_model()
+    query_vector = model.encode(query)
+
+    # 2. Prepare query embedding as 2D float32 numpy array and normalize for Cosine Similarity
+    xq = np.array([query_vector]).astype('float32')
+    faiss.normalize_L2(xq)
+
+    # 3. Read index and search
+    index = faiss.read_index(str(FAISS_PATH))
+    D, I = index.search(xq, top_k)
+
+    # 4. Load metadata
+    metadata_list = json.loads(META_PATH.read_text(encoding="utf-8"))
+
+    # 5. Build and sort result list
+    results = []
+    for score, idx in zip(D[0], I[0]):
+        if idx == -1:
+            continue
+        if idx >= len(metadata_list):
+            continue
+
+        item = metadata_list[idx]
+        results.append({
+            "content": item["content"],
+            "score": float(score),
+            "metadata": item["metadata"]
+        })
+
+    # FAISS FlatIP search returns sorted by descending score already,
+    # but we explicitly sort to satisfy all expectations.
+    results.sort(key=lambda x: x["score"], reverse=True)
+    return results
 
 
 if __name__ == "__main__":

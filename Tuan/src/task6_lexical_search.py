@@ -15,10 +15,40 @@ BM25 hoạt động thế nào:
     - k1=1.5 (term saturation), b=0.75 (length normalization)
 """
 
+import json
+import sys
 from pathlib import Path
+import numpy as np
+from rank_bm25 import BM25Okapi
 
-# TODO: Load corpus từ data/standardized/ hoặc từ vector store
-CORPUS: list[dict] = []  # List of {'content': str, 'metadata': dict}
+# Reconfigure output streams to handle UTF-8 printing safely on Windows
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
+
+STANDARDIZED_DIR = Path(__file__).parent.parent / "data" / "standardized"
+META_PATH = STANDARDIZED_DIR / "vectorstore_meta.json"
+
+# CORPUS: List of {'content': str, 'metadata': dict}
+CORPUS: list[dict] = []
+_bm25_index = None
+
+
+def load_corpus() -> list[dict]:
+    """Đọc corpus từ file metadata."""
+    global CORPUS
+    if not CORPUS:
+        if META_PATH.exists():
+            try:
+                CORPUS = json.loads(META_PATH.read_text(encoding="utf-8"))
+            except Exception as e:
+                print(f"Error loading corpus metadata: {e}")
+                CORPUS = []
+        else:
+            print(f"Metadata file {META_PATH} does not exist. Please run task 4 first.")
+            CORPUS = []
+    return CORPUS
 
 
 def build_bm25_index(corpus: list[dict]):
@@ -28,15 +58,20 @@ def build_bm25_index(corpus: list[dict]):
     Args:
         corpus: List of {'content': str, 'metadata': dict}
     """
-    # TODO: Implement BM25 index
-    #
-    # from rank_bm25 import BM25Okapi
-    #
-    # # Tokenize - cho tiếng Việt nên dùng underthesea hoặc đơn giản split()
-    # tokenized_corpus = [doc["content"].lower().split() for doc in corpus]
-    # bm25 = BM25Okapi(tokenized_corpus)
-    # return bm25
-    raise NotImplementedError("Implement build_bm25_index")
+    # Tokenize - cho tiếng Việt nên dùng underthesea hoặc đơn giản split()
+    tokenized_corpus = [doc["content"].lower().split() for doc in corpus]
+    bm25 = BM25Okapi(tokenized_corpus)
+    return bm25
+
+
+def get_bm25_index():
+    """Lấy hoặc khởi tạo BM25 index."""
+    global _bm25_index
+    if _bm25_index is None:
+        corpus = load_corpus()
+        if corpus:
+            _bm25_index = build_bm25_index(corpus)
+    return _bm25_index
 
 
 def lexical_search(query: str, top_k: int = 10) -> list[dict]:
@@ -55,25 +90,33 @@ def lexical_search(query: str, top_k: int = 10) -> list[dict]:
         }
         Sorted by score descending.
     """
-    # TODO: Implement lexical search
-    #
-    # tokenized_query = query.lower().split()
-    # scores = bm25.get_scores(tokenized_query)
-    #
-    # # Get top_k indices
-    # import numpy as np
-    # top_indices = np.argsort(scores)[::-1][:top_k]
-    #
-    # results = []
-    # for idx in top_indices:
-    #     if scores[idx] > 0:
-    #         results.append({
-    #             "content": CORPUS[idx]["content"],
-    #             "score": float(scores[idx]),
-    #             "metadata": CORPUS[idx]["metadata"]
-    #         })
-    # return results
-    raise NotImplementedError("Implement lexical_search")
+    bm25 = get_bm25_index()
+    corpus = load_corpus()
+    if bm25 is None or not corpus:
+        print("BM25 index could not be built because corpus is empty.")
+        return []
+
+    tokenized_query = query.lower().split()
+    scores = bm25.get_scores(tokenized_query)
+
+    # Get indices of documents, sorted by score descending
+    top_indices = np.argsort(scores)[::-1]
+
+    results = []
+    for idx in top_indices:
+        if len(results) >= top_k:
+            break
+        # Only keep matches that have a positive BM25 score
+        if scores[idx] > 0:
+            results.append({
+                "content": corpus[idx]["content"],
+                "score": float(scores[idx]),
+                "metadata": corpus[idx]["metadata"]
+            })
+
+    # Explicitly ensure the returned list is sorted descending by score
+    results.sort(key=lambda x: x["score"], reverse=True)
+    return results
 
 
 if __name__ == "__main__":
